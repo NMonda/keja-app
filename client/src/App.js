@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
+// be sure to have this as an env var(I will let you figure this out)
+const BACKEND_BASE_URL = 'http://localhost:5500';
 
 function App() {
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
-      const response = await axios.get('./listings');
-      setListings(response.data);
+      const response = await fetch(`${BACKEND_BASE_URL}/api/listings`);
+      const listingsData = await response.json();
+      setListings(listingsData);
     }
     fetchData();
   }, []);

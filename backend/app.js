@@ -1,9 +1,20 @@
+// load .env file here
+require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const Listing = require('./models/Listing');
+const { MongoDbError } = require('./lib');
 
 const app = express();
+
+const { MONGODB_URI } = process.env;
+const DB_NAME = 'keja_app';
+
+if (!MONGODB_URI) {
+  throw new MongoDbError('MONGOGB_URI env variable is not set!');
+}
 
 // Middleware
 app.use(cors());
@@ -12,7 +23,7 @@ app.get('/listings', (req, res) => {
   // handle the request and send a response
 });
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://nmonda:1234@mongo-nm-dev.6nph5p6.mongodb.net/test', {
+mongoose.connect(`${MONGODB_URI}/${DB_NAME}`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => {
