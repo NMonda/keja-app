@@ -49,10 +49,11 @@ const User = require('../models/User');
 // });
 
 // Create a new user
-router.post('/users', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const { name, email, password } = req.body;
     const user = new User({ name, email, password });
+    console.log({ user });
     await user.save();
     res.status(201).send(user);
   } catch (error) {
@@ -62,7 +63,7 @@ router.post('/users', async (req, res) => {
 });
 
 // Get all users
-router.get('/users', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const users = await User.find();
     res.send(users);
