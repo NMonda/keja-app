@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const Listing = require('../models/Listing');
-const User = require('../models/User');
+const { User, Listing } = require('../models/');
 
 // Create a new listing
-router.post('/listings', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const { address, price, bedrooms, bathrooms, size, userId } = req.body;
     const listing = new Listing({
@@ -24,9 +23,10 @@ router.post('/listings', async (req, res) => {
 });
 
 // Get all listings
-router.get('/listings', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const listings = await Listing.find();
+    console.log({ listings });
     res.send(listings);
   } catch (error) {
     console.log(error);
