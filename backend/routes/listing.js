@@ -1,11 +1,15 @@
 const express = require('express');
+const { listingsService } = require('../services');
+const { handleJoiValidationError } = require('../lib');
+
 const router = express.Router();
-const { User, Listing } = require('../models/');
 
 // Create a new listing
 router.post('/', async (req, res) => {
   try {
-    const { address, price, bedrooms, bathrooms, size, userId } = req.body;
+    const { Listing } = req.models;
+    const newListing = await listingsService.createListing(req.body);
+    const { address, price, bedrooms, bathrooms, size, userId } = newListing.value;
     const listing = new Listing({
       address,
       price,
@@ -17,8 +21,8 @@ router.post('/', async (req, res) => {
     await listing.save();
     res.status(201).send(listing);
   } catch (error) {
-    console.log(error);
-    res.status(500).send('Error creating listing');
+    const { statusCode, errorMessage } = handleJoiValidationError(error);
+    res.status(statusCode).send({ errorMessage, statusCode });
   }
 });
 

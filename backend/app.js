@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const { MongoDbError } = require('./lib');
 const { listingRoutes, userRoutes } = require('./routes');
+const models = require('./models');
 
 const app = express();
 
@@ -20,6 +21,13 @@ if (!MONGODB_URI) {
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// register all models (kinda like auto-import them)
+app.use(async (req, res, next) => {
+  req.models = models;
+
+  await next();
+});
 
 // Connect to MongoDB
 mongoose.connect(`${MONGODB_URI}/${DB_NAME}`, {
