@@ -1,4 +1,4 @@
-const SchemaValidationError = require('./SchemaValidationError');
+const { SchemaValidationError } = require('../errors');
 
 function handleJoiValidationError(error) {
   if (error instanceof SchemaValidationError) {

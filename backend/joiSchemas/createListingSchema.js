@@ -1,8 +1,5 @@
-const { Joi } = require('celebrate');
-const SchemaValidationError = require('./SchemaValidationError');
-
-// set the ObjectID here (used for Validating MongoDB id)
-Joi.objectId = require('joi-objectid')(Joi);
+const Joi = require('./joi');
+const { SchemaValidationError } = require('../errors');
 
 module.exports = Joi.object({
   userId: Joi.objectId()

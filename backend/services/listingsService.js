@@ -1,7 +1,6 @@
-const {
-  listingJoiSchema, 
-  SchemaValidationError,
-} = require('../lib');
+const { SchemaValidationError, ListingError } = require('../errors');
+
+const { createListingSchema, retrieveListingSchema } = require('../joiSchemas');
 
 /**
  * This service is responsible for data validation during create, retrieval & updating a listing
@@ -15,7 +14,7 @@ module.exports = {
    */
   async createListing({ payload, model }) {
     try {
-      const { value, error } = listingJoiSchema.validate(payload);
+      const { value, error } = createListingSchema.validate(payload);
       if (error) {
         throw new SchemaValidationError(error.message);
       }
@@ -44,11 +43,15 @@ module.exports = {
    */
   async retrieveListingById({ model, listingId }) {
     try {
-      const foundItem = await model.findById(listingId);
+      const { value, error } = retrieveListingSchema.validate({ listingId });
+      if (error) {
+        throw new ListingError(error.message);
+      }
+      const foundItem = await model.findById(value.listingId);
       return foundItem;
     } catch (error) {
      // @TODO - Improve this error message
-      throw new Error(error.message);
+      throw new ListingError(error.message);
     }
   },
 
@@ -61,7 +64,7 @@ module.exports = {
       return items;
     } catch (error) {
       // @TODO - Improve this error message
-     throw new Error(error.message)
+     throw new ListingError(error.message)
     }
   },
 };
