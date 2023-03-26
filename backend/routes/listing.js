@@ -38,6 +38,12 @@ router.get('/:id', async (req, res) => {
     if (!listing) {
       return res.status(404).send(`No listing with id ${req.params.id} found`);
     }
+
+    if (listing && listing.statusCode !== 200) {
+      const { errorMessage, statusCode } = listing;
+      return res.status(statusCode).send(`${errorMessage}: ${req.params.id}`);
+    }
+
     res.send(listing);
   } catch (error) {
     res.status(500).send(error.message);

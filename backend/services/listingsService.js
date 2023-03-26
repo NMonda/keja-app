@@ -50,8 +50,15 @@ module.exports = {
       const foundItem = await model.findById(value.listingId);
       return foundItem;
     } catch (error) {
-     // @TODO - Improve this error message
-      throw new ListingError(error.message);
+      if (error instanceof ListingError) {
+        return {
+          statusCode: 422,
+          errorMessage: error.message,
+        };
+      }
+
+      // this would be a server error
+      throw new Error(error.message);
     }
   },
 
