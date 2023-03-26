@@ -40,8 +40,8 @@ mongoose.connect(`${MONGODB_URI}/${DB_NAME}`, {
 });
 
 // serve the routes
-app.use('/api/users', userRoutes);
-app.use('/api/listings', listingRoutes);
+app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/listings', listingRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5500;
