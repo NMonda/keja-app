@@ -9,7 +9,7 @@ function App() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`${BACKEND_BASE_URL}/api/listings`);
+      const response = await fetch(`${BACKEND_BASE_URL}/api/v1/listings`);
       const listingsData = await response.json();
       console.log({ listingsData });
       setListings(listingsData);
