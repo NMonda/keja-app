@@ -1,5 +1,5 @@
-const MongoDbError = require('./MongoDbError');
+const handleJoiValidationError = require('./handleJoiValidationError');
 
 module.exports = {
-  MongoDbError,
+  handleJoiValidationError,
 };

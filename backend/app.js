@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const { MongoDbError } = require('./lib');
 const { listingRoutes, userRoutes } = require('./routes');
+const models = require('./models');
 
 const app = express();
 
@@ -21,6 +22,13 @@ if (!MONGODB_URI) {
 app.use(cors());
 app.use(express.json());
 
+// register all models (kinda like auto-import them)
+app.use(async (req, res, next) => {
+  req.models = models;
+
+  await next();
+});
+
 // Connect to MongoDB
 mongoose.connect(`${MONGODB_URI}/${DB_NAME}`, {
   useNewUrlParser: true,
@@ -32,8 +40,8 @@ mongoose.connect(`${MONGODB_URI}/${DB_NAME}`, {
 });
 
 // serve the routes
-app.use('/api/users', userRoutes);
-app.use('/api/listings', listingRoutes);
+app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/listings', listingRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5500;
