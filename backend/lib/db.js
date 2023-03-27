@@ -33,24 +33,36 @@ class Db {
     }
   }
 
-  // Class methods
-  static async dropDatabase() {
-    try {
-      if (this.isConnected()) {
-        await mongoose.connection.dropDatabase();
-        console.log('[DB:dropDatabase] DB dropped');
-      }
-    } catch (error) {
-      console.error(`[DB:dropDatabase] Could not drop DB: ${error.message}`);
-    }
-  }
-
-  static isConnected() {
+  async isConnected() {
     return mongoose.connection.readyState === 1;
   }
 
-  static async awaitConnection() {
-    await new this(this.url).connect();
+  async disconnect() {
+    try {
+      if (this.isConnected()) {
+        await mongoose.disconnect();
+
+        if (NODE_ENV !== 'test') {
+          console.log('[DB:disconnect] Mongoose connection closed successfully');
+        }
+      }
+    } catch (error) {
+      console.error(`[DB:disconnect] Could not close Mongoose connection: ${error.message}`);
+    }
+  }
+
+  async dropDatabase() {
+    try {
+      if (this.isConnected()) {
+        await mongoose.connection.dropDatabase();
+
+        if (NODE_ENV !== 'test') {
+          console.log('[DB:dropDatabase] Db dropped successfully');
+        }
+      }
+    } catch (error) {
+      console.error(`[DB:dropDatabase] Could not drop Db: ${error.message}`);
+    }
   }
 }
 
