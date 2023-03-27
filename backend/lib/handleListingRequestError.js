@@ -15,5 +15,5 @@ module.exports = (error) => {
     };
   }
 
-  throw new Error('A server error occurred while creating a listing');
+  throw new Error(error.message);
 };

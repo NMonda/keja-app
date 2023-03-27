@@ -4,6 +4,7 @@ const models = require('../models');
 const lib = require('../lib');
 const routes = require('../routes');
 const errors = require('../errors');
+const services = require('../services');
 
 chai.use(chaiSubset);
 
@@ -15,4 +16,5 @@ module.exports = {
   lib,
   routes,
   errors,
+  services,
 };

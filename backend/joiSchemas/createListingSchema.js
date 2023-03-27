@@ -8,7 +8,7 @@ module.exports = Joi.object({
   address: Joi.string()
     .required()
     .error(new SchemaValidationError('address must be a valid string')),
-  size: Joi.string()
+  size: Joi.number()
     .required()
     .error(new SchemaValidationError('size must be a valid string')),
   price: Joi.number()

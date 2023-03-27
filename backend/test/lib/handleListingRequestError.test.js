@@ -27,7 +27,7 @@ describe('handleListingRequestError', () => {
       } catch (error) {
         expect(error instanceof ListingError).to.equal(false);
         expect(error instanceof SchemaValidationError).to.equal(false);
-        expect(error.message).to.match(/A server error occurred while creating a listing/i);
+        expect(error.message).to.match(/houston has a problem/i);
       }
     });
   });
