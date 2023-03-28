@@ -1,0 +1,14 @@
+name: CI CD
+
+on: [push]
+
+jobs:
+  backend_specs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v2
+      - name: Yarn Install
+        run: yarn install
+      - name: Mocha Tests
+        run: yarn test
