@@ -7,7 +7,8 @@
     "start": "node app.js",
     "server": "nodemon app.js",
     "client": "npm start --prefix  ../client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "test": ". ./test/setup.sh && ./node_modules/.bin/_mocha --recursive --timeout=10000 test"
   },
   "author": "",
   "license": "ISC",
@@ -19,5 +20,13 @@
     "express": "^4.18.2",
     "joi-objectid": "^4.0.2",
     "mongoose": "^7.0.1"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "chai": "^4.3.7",
+    "chai-subset": "^1.6.0",
+    "mocha": "^10.2.0",
+    "sinon": "^15.0.3",
+    "supertest": "^6.3.3"
   }
 }
