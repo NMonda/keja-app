@@ -11,4 +11,4 @@ jobs:
       - name: Yarn Install
         run: yarn install
       - name: Mocha Tests
-        run: yarn test
+        run: cd backend && yarn test

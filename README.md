@@ -1,4 +1,6 @@
 ## Keja-App
+
+![DEPLOYMENT STATUS](https://github.com/NMonda/keja-app/actions/workflows/jobs.yml/badge.svg)
 ### Project Description
 The purpose of this project is to create a smart real estate platform that will simplify the process of house hunting and selling for both buyers and sellers. The current process of buying or selling a house is often time-consuming and complex, requiring multiple visits to properties, lengthy negotiations, and paperwork. The smart real estate platform aims to streamline this process and provide an efficient and user-friendly solution.
 
