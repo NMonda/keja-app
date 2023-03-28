@@ -8,6 +8,8 @@ const services = require('../services');
 
 chai.use(chaiSubset);
 
+const testServerPort = 4999;
+
 const { expect } = chai;
 
 module.exports = {
@@ -17,4 +19,5 @@ module.exports = {
   routes,
   errors,
   services,
+  testServerPort,
 };

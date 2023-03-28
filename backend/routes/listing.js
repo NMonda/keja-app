@@ -34,16 +34,16 @@ router.get('/', async (req, res) => {
 });
 
 // Get a specific listing by ID
-router.get('/:id', async (req, res) => {
+router.get('/:listingId', async (req, res) => {
   try {
     const { Listing } = req.models;
     const listing = await listingsService.retrieveListingById({
       model: Listing,
-      listingId: req.params.id,
+      listingId: req.params.listingId,
     });
     
     if (!listing) {
-      return res.status(404).send(`No listing with id ${req.params.id} found`);
+      return res.status(404).send(`No listing with id ${req.params.listingId} found`);
     }
 
     const hasStatusCode = Object.prototype.hasOwnProperty.call(listing, 'statusCode');
@@ -53,7 +53,7 @@ router.get('/:id', async (req, res) => {
     }
 
     const { errorMessage, statusCode } = listing;
-    return res.status(statusCode).send(`${errorMessage}: ${req.params.id}`);
+    return res.status(statusCode).send(`${errorMessage}: ${req.params.listingId}`);
   } catch (error) {
     res.status(500).send(error.message);
   }

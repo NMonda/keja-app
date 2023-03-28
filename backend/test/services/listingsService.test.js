@@ -1,5 +1,5 @@
 const sinon = require('sinon');
-const { expect, lib, errors, services, models } = require('../setup');
+const { expect, lib, services, models } = require('../setup');
 const listing = require('../fixtures/listing').createFake();
 
 const { listingsService } = services;

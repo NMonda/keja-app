@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { expect, lib, errors } = require('../setup');
+const { expect, lib } = require('../setup');
 
 const { Db } = lib;
 
