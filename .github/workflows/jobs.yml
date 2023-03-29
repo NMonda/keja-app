@@ -9,10 +9,7 @@ jobs:
       - name: Code Checkout
         uses: actions/checkout@v2
       - name: Setup MongoDB
-        uses: mongo/mongodb-setup-action@v1.0.0
-        with:
-          mongodb_uri: mongodb+srv://user1:test@cluster0.lczgx2q.mongodb.net/test?retryWrites=true&w=majority
-          mongodb_api_key: ${{ secrets.MONGODB_API_KEY }}
+        uses:  supercharge/mongodb-github-action@1.6.0
       - name: Yarn Install(backend)
         run: cd backend && yarn install
       - name: Mocha Tests
