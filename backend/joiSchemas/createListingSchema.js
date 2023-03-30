@@ -21,5 +21,3 @@ module.exports = Joi.object({
     .required()
     .error(new SchemaValidationError('bedrooms must be a valid integer')),
 });
-
-

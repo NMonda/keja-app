@@ -1,24 +1,21 @@
-const sinon = require('sinon');
 const request = require('supertest');
-const { expect, lib, testServerPort, services, models } = require('../setup');
+const { expect, lib, testServerPort } = require('../setup');
 const listing = require('../fixtures/listing');
 const { clearDatabase, closeDbConnection } = require('../helpers');
 
-const { Listing } = models;
-const { Db, createApp } = lib;
-// const { MONGODB_URI, DB_NAME } = process.env;
+const { createApp } = lib;
 
 describe('Routes', () => {
   describe('Listing', () => {
     let server;
 
-    beforeEach(async function () {
+    beforeEach(async () => {
       // await clearDatabase();
       const app = await createApp();
       server = app.listen(testServerPort);
     });
 
-    afterEach(async function() {
+    afterEach(async () => {
       server.close();
       await closeDbConnection();
     });
@@ -48,7 +45,7 @@ describe('Routes', () => {
     // GET REQUEST TO RETRIEVE ALL LISTINGS
     describe('GET /api/v1/listings', () => {
       // create test listings first
-      beforeEach(async function() {
+      beforeEach(async () => {
         await clearDatabase();
         await listing.createDbListing();
       });
@@ -66,7 +63,7 @@ describe('Routes', () => {
     describe('GET /api/v1/listings/:listingId', () => {
       let listingId;
       // create a test listing first
-      beforeEach(async function() {
+      beforeEach(async () => {
         await clearDatabase();
         const result = await listing.createDbListing();
         listingId = result._id.toString();

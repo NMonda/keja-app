@@ -6,17 +6,16 @@ const { User } = models;
 const { Db } = lib;
 const { MONGODB_URI, DB_NAME } = process.env;
 
-
 describe('Models', () => {
   describe('User', () => {
     let db;
 
-    beforeEach(async function () {
+    beforeEach(async () => {
       db = new Db(`${MONGODB_URI}/${DB_NAME}`);
       await db.connect();
     });
 
-    afterEach(async function() {
+    afterEach(async () => {
       await db.disconnect();
     });
 
@@ -36,13 +35,13 @@ describe('Models', () => {
             const invalidSchema = {
               ...user,
               email: null,
-            };  
-  
+            };
+
             await new User(invalidSchema).save();
           } catch (error) {
             expect(error.name).to.equal('ValidationError');
             expect(error.message).to.match(/validation failed: email/i);
-          } 
+          }
         });
 
         it('fails when password is not provided', async () => {
@@ -50,13 +49,13 @@ describe('Models', () => {
             const invalidSchema = {
               ...user,
               password: null,
-            };  
-  
+            };
+
             await new User(invalidSchema).save();
           } catch (error) {
             expect(error.name).to.equal('ValidationError');
             expect(error.message).to.match(/validation failed: password/i);
-          } 
+          }
         });
 
         it('fails when name is not provided', async () => {
@@ -64,8 +63,8 @@ describe('Models', () => {
             const invalidSchema = {
               ...user,
               name: null,
-            };  
-  
+            };
+
             await new User(invalidSchema).save();
           } catch (error) {
             expect(error.name).to.equal('ValidationError');
