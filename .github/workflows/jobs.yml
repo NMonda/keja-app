@@ -14,3 +14,13 @@ jobs:
         run: cd backend && yarn install
       - name: Mocha Tests
         run: cd backend && yarn test
+
+  backend_linter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v2
+      - name: Yarn Install(backend)
+        run: cd backend && yarn install
+      - name: ESLint
+        run: cd backend && yarn lint

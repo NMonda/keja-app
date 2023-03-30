@@ -10,12 +10,12 @@ const { MONGODB_URI, DB_NAME } = process.env;
 describe('listingsService', () => {
   let db;
 
-  beforeEach(async function () {
+  beforeEach(async () => {
     db = new Db(`${MONGODB_URI}/${DB_NAME}`);
     await db.connect();
   });
 
-  afterEach(async function() {
+  afterEach(async () => {
     await db.dropDatabase();
     await db.disconnect();
   });
@@ -27,7 +27,7 @@ describe('listingsService', () => {
         const correctListing = { ...listing };
         delete correctListing.postedBy;
         const result = await listingsService.createListing({
-          model: Listing,
+          Listing,
           payload: {
             ...correctListing,
             userId: '6421f14da96e22789b5d358e',
@@ -47,7 +47,7 @@ describe('listingsService', () => {
         // has an extra field
         const invalidSchema = { ...listing };
         const result = await listingsService.createListing({
-          model: Listing,
+          Listing,
           payload: {
             ...invalidSchema,
             userId: '6421f14da96e22789b5d358e',
@@ -69,7 +69,7 @@ describe('listingsService', () => {
 
         const invalidSchema = { ...listing };
         await listingsService.createListing({
-          model: Listing,
+          Listing,
           payload: {
             ...invalidSchema,
             userId: '6421f14da96e22789b5d358e',
@@ -86,11 +86,11 @@ describe('listingsService', () => {
   describe('#retrieveListingById', () => {
     describe('with valid schema', () => {
       let listingId;
-      beforeEach(async function() {
+      beforeEach(async () => {
         const correctListing = { ...listing };
         delete correctListing.postedBy;
         const result = await listingsService.createListing({
-          model: Listing,
+          Listing,
           payload: {
             ...correctListing,
             userId: '6421f14da96e22789b5d358e',
@@ -103,17 +103,17 @@ describe('listingsService', () => {
       it('returns the found listing', async () => {
         const result = await listingsService.retrieveListingById({
           listingId,
-          model: Listing,
+          Listing,
         });
 
         expect(result._id.toString()).to.eq(listingId);
       });
 
       it('returns null if no listing is found', async () => {
-        const wrongListingId = `${listingId.slice(0, -1)}0`;
+        const wrongListingId = `${listingId.slice(0, -1)}1`;
         const result = await listingsService.retrieveListingById({
+          Listing,
           listingId: wrongListingId,
-          model: Listing,
         });
 
         expect(result).to.be.a('null');
@@ -121,10 +121,10 @@ describe('listingsService', () => {
     });
 
     describe('with invalid schema', () => {
-      it('fails with the correct error message', async() => {
+      it('fails with the correct error message', async () => {
         const result = await listingsService.retrieveListingById({
+          Listing,
           listingId: 'wrong-list-id',
-          model: Listing,
         });
 
         expect(result.statusCode).to.eq(400);
@@ -142,7 +142,7 @@ describe('listingsService', () => {
     });
 
     describe('When there is data', () => {
-      beforeEach(async function() {
+      beforeEach(async () => {
         await new Listing(listing).save();
       });
 

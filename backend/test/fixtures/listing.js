@@ -23,7 +23,7 @@ module.exports = {
       bedrooms: faker.datatype.number(),
       bathrooms: faker.datatype.number(),
       size: faker.datatype.number(),
-    }
+    };
   },
 
   createInvalidRequestBody() {

@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { MongoDbError } = require('../errors');
-const { listingRoutes, userRoutes } = require('../routes');
+const { listingRoutes, userRoutes, heartbeatRoute } = require('../routes');
 const models = require('../models');
 const Db = require('./db');
 
@@ -14,7 +14,7 @@ async function createApp() {
     if (!MONGODB_URI) {
       throw new MongoDbError('MONGOGB_URI env variable is not set!');
     }
-    
+
     const app = express();
 
     // register Middleware
@@ -23,13 +23,15 @@ async function createApp() {
 
     app.use(async (req, res, next) => {
       req.models = models;
-    
+
       await next();
     });
 
     // register PUBLIC routes
     app.use('/api/v1/users', userRoutes);
     app.use('/api/v1/listings', listingRoutes);
+    app.use('/', heartbeatRoute);
+    app.use('/heartbeat', heartbeatRoute);
 
     // start DB connection
     const db = new Db(`${MONGODB_URI}/${DB_NAME}`);

@@ -9,10 +9,10 @@ const handleListingRequestError = require('../lib/handleListingRequestError');
 module.exports = {
   /**
    * This function validates the provided request body payload against listingSchema
-   * @param {Object} payload 
+   * @param {Object} payload
    * @returns {Object | Error} Either returns a validated object or an error
    */
-  async createListing({ payload, model }) {
+  async createListing({ payload, Listing }) {
     try {
       const { value, error } = createListingSchema.validate(payload);
       if (error) {
@@ -20,7 +20,7 @@ module.exports = {
       }
 
       const { address, price, bedrooms, bathrooms, size, userId } = value;
-      const listing = new model({
+      const listing = new Listing({
         address,
         price,
         bedrooms,
@@ -41,13 +41,13 @@ module.exports = {
    * @param {String} listingId mongoDb Id
    * @returns {Object | Error} MongoDB record found or throws an error
    */
-  async retrieveListingById({ model, listingId }) {
+  async retrieveListingById({ Listing, listingId }) {
     try {
       const { value, error } = retrieveListingSchema.validate({ listingId });
       if (error) {
         throw new SchemaValidationError(error.message);
       }
-      const foundItem = await model.findById(value.listingId);
+      const foundItem = await Listing.findById(value.listingId);
       return foundItem;
     } catch (error) {
       return handleListingRequestError(error);
@@ -57,9 +57,9 @@ module.exports = {
   /**
    * Retrieves all Listings from the DB.
    */
-  async getAllListings(model) {
+  async getAllListings(Listing) {
     try {
-      const items = await model.find();
+      const items = await Listing.find();
       return items;
     } catch (error) {
       return handleListingRequestError(error);
