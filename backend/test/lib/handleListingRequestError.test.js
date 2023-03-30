@@ -1,4 +1,5 @@
 const { expect, lib, errors } = require('../setup');
+
 const { handleListingRequestError } = lib;
 const { ListingError, SchemaValidationError } = errors;
 
@@ -18,7 +19,6 @@ describe('handleListingRequestError', () => {
       expect(result.errorMessage).to.match(/listing/i);
     });
   });
-
 
   describe('Given a server error', () => {
     it('Then it throws the correct error message', () => {

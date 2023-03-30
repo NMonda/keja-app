@@ -7,12 +7,12 @@ const router = express.Router();
 router.post('/', async (req, res) => {
   try {
     const { Listing } = req.models;
-    const newListing = await listingsService.createListing({ model: Listing, payload: req.body });
+    const newListing = await listingsService.createListing({ Listing, payload: req.body });
     const hasStatusCode = Object.prototype.hasOwnProperty.call(newListing, 'statusCode');
 
     // dealing with a success scenario
     if (!hasStatusCode) {
-      return  res.status(201).send(newListing);
+      return res.status(201).send(newListing);
     }
 
     const { errorMessage, statusCode } = newListing;
@@ -38,10 +38,10 @@ router.get('/:listingId', async (req, res) => {
   try {
     const { Listing } = req.models;
     const listing = await listingsService.retrieveListingById({
-      model: Listing,
+      Listing,
       listingId: req.params.listingId,
     });
-    
+
     if (!listing) {
       return res.status(404).send(`No listing with id ${req.params.listingId} found`);
     }

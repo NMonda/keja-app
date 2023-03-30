@@ -5,10 +5,12 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "server": "nodemon app.js",
+    "server": "./node_modules/.bin/nodemon app.js",
     "client": "npm start --prefix  ../client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "test": ". ./test/setup.sh && ./node_modules/.bin/_mocha --recursive --timeout=10000 test"
+    "test": ". ./test/setup.sh && ./node_modules/.bin/_mocha --recursive --timeout=10000 test",
+    "lint": "./node_modules/.bin/eslint .",
+    "lint:fix": "./node_modules/.bin/eslint --fix ."
   },
   "author": "",
   "license": "ISC",
@@ -25,7 +27,13 @@
     "@faker-js/faker": "^7.6.0",
     "chai": "^4.3.7",
     "chai-subset": "^1.6.0",
+    "eslint": "^8.37.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-chai-expect": "^3.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-mocha": "^10.1.0",
     "mocha": "^10.2.0",
+    "nodemon": "^2.0.22",
     "sinon": "^15.0.3",
     "supertest": "^6.3.3"
   }

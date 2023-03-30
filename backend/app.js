@@ -9,7 +9,6 @@ async function main() {
   try {
     const app = await createApp();
 
-
     app.listen(PORT, () => {
       console.log(`Server listening on port ${PORT}`);
     });

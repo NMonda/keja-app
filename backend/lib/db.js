@@ -33,6 +33,7 @@ class Db {
     }
   }
 
+  /* eslint-disable-next-line class-methods-use-this */
   async isConnected() {
     return mongoose.connection.readyState === 1;
   }
