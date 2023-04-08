@@ -2,6 +2,10 @@ const Joi = require('./joi');
 const { SchemaValidationError } = require('../errors');
 
 module.exports = Joi.object({
+  name: Joi.string()
+    .required()
+    .min(5)
+    .error(new SchemaValidationError('name must contain at least 5 characters')),
   userId: Joi.objectId()
     .required()
     .error(new SchemaValidationError('userId must be a valid MongoDb ID')),

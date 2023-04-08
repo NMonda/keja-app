@@ -27,6 +27,17 @@ describe('Models', () => {
           expect(result._id).not.to.equal('');
           expect(result._id instanceof mongoose.mongo.ObjectId).to.eq(true);
         });
+
+        it('converts name to lowercase before saving', async () => {
+          const newName = 'UPPER_CASED_NAME';
+          const newListing = new Listing({
+            ...listing,
+            name: newName,
+          });
+          const result = await newListing.save();
+          expect(result.name).to.eq(newName.toLowerCase());
+          expect(result.name).not.to.eq(newName);
+        });
       });
 
       describe('Failure', () => {
@@ -37,6 +48,20 @@ describe('Models', () => {
           } catch (error) {
             expect(error.name).to.equal('ValidationError');
             expect(error.message).to.match(/validation failed/i);
+          }
+        });
+
+        it('fails no name is provided', async () => {
+          try {
+            const invalidSchema = {
+              ...listing,
+              name: null,
+            };
+
+            await new Listing(invalidSchema).save();
+          } catch (error) {
+            expect(error.name).to.equal('ValidationError');
+            expect(error.message).to.match(/validation failed: name/i);
           }
         });
 

@@ -45,6 +45,13 @@ yarn install
 npm install
 ```
 
+**Environment Variables**
+
+Run the command below to create a `.env` file inside the `backend` workspace.
+
+```bash
+cp .env.sample .env
+```
 #### Running dev server
 Start the backend server with: `yarn server` (or again if you'd prefer NPM over YARN, then start the server with `npm run server`).
 
