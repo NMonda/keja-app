@@ -7,6 +7,7 @@ const { Listing } = models;
 module.exports = {
   createFake() {
     return {
+      name: faker.random.alpha(6),
       postedBy: new mongoose.Types.ObjectId(),
       address: faker.address.city(),
       price: faker.datatype.float(),
@@ -18,6 +19,7 @@ module.exports = {
   createRequestBody(userId = new mongoose.Types.ObjectId()) {
     return {
       userId,
+      name: faker.random.alpha(6),
       address: faker.address.city(),
       price: faker.datatype.float(),
       bedrooms: faker.datatype.number(),
@@ -34,6 +36,7 @@ module.exports = {
       bedrooms: faker.datatype.number(),
       bathrooms: faker.datatype.number(),
       size: faker.datatype.number(),
+      name: faker.random.alpha(6),
     };
   },
 
@@ -45,6 +48,7 @@ module.exports = {
       bedrooms: faker.datatype.number(),
       bathrooms: faker.datatype.number(),
       size: faker.datatype.number(),
+      name: faker.random.alpha(6),
     };
 
     const newListing = new Listing(listing);

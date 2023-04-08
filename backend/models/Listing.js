@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
+const { listingHooks } = require('./hooks');
 
 const listingSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
   address: {
     type: String,
     required: true,
@@ -31,6 +36,9 @@ const listingSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
+
+// register the hooks
+listingHooks(listingSchema);
 
 const Listing = mongoose.model('Listing', listingSchema);
 

@@ -1,4 +1,4 @@
-const { SchemaValidationError } = require('../errors');
+const { SchemaValidationError, ListingError } = require('../errors');
 const { createListingSchema, retrieveListingSchema } = require('../joiSchemas');
 const handleListingRequestError = require('../lib/handleListingRequestError');
 
@@ -19,8 +19,15 @@ module.exports = {
         throw new SchemaValidationError(error.message);
       }
 
-      const { address, price, bedrooms, bathrooms, size, userId } = value;
+      const { address, price, bedrooms, bathrooms, size, userId, name } = value;
+      const existingListing = await Listing.findOne({ name });
+
+      if (existingListing) {
+        throw new ListingError(`Listing with name: ${name} already exists`);
+      }
+
       const listing = new Listing({
+        name,
         address,
         price,
         bedrooms,

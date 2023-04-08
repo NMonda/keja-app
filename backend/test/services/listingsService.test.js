@@ -40,6 +40,34 @@ describe('listingsService', () => {
         const newAllRecords = await Listing.find();
         expect(newAllRecords.length).to.eq(allRecords.length + 1);
       });
+
+      it('throws an error when trying to recreate a listing', async () => {
+        let listingName = '';
+        const correctListing = { ...listing };
+        delete correctListing.postedBy;
+
+        const result = await listingsService.createListing({
+          Listing,
+          payload: {
+            ...correctListing,
+            userId: '6421f14da96e22789b5d358e',
+          },
+        });
+
+        listingName = result.name;
+
+        const duplicateListing = await listingsService.createListing({
+          Listing,
+          payload: {
+            ...correctListing,
+            name: listingName,
+            userId: '6421f14da96e22789b5d358e',
+          },
+        });
+
+        expect(duplicateListing.statusCode).to.eq(422);
+        expect(duplicateListing.errorMessage).to.eq(`Listing with name: ${listingName} already exists`);
+      });
     });
 
     describe('with invalid schema', () => {
@@ -79,6 +107,19 @@ describe('listingsService', () => {
         expect(saveStub.callCount).to.eq(0);
 
         saveStub.restore();
+      });
+
+      it('fails when the name provided has less than 5 characters', async () => {
+        const invalidSchema = { ...listing };
+        const result = await listingsService.createListing({
+          Listing,
+          payload: {
+            ...invalidSchema,
+            name: 'abc',
+          },
+        });
+        expect(result.statusCode).to.eq(400);
+        expect(result.errorMessage).to.eq('name must contain at least 5 characters');
       });
     });
   });
